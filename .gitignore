@@ -1,3 +1,5 @@
 /target
 
-limit-order-subintent-example/target/
+sdk/target/
+
+sdk/anthic-subintents/target/

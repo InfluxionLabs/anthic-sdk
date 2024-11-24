@@ -3,5 +3,9 @@
 resolver = "2"
 
 members = [
-    "limit-order-subintent-example",
+    "example-fill-subintent",
+    "sdk/anthic-client",
+    "sdk/anthic-model",
+    "sdk/anthic-subintents",
+    "sdk/anthic-trade-api-client",
 ]

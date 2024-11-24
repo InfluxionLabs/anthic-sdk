@@ -1,0 +1,14 @@
+[package]
+name = "anthic-subintents"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-common-derive = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-transactions = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-engine-interface = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+sbor = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+
+hex = "0.4.3"
+anthic-model = { path = "../anthic-model" }

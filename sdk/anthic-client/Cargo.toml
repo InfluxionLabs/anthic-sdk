@@ -1,0 +1,17 @@
+[package]
+name = "anthic-client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-common-derive = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-transactions = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-engine-interface = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+reqwest = { version = "0.12.9", features = ["json"] }
+serde_json = "1.0.107"
+serde = { version = "1.0.190", features = ["derive"] }
+tokio = { version = "1.32.0", features = ["full"]}
+hex = "0.4.3"
+anthic-trade-api-client = { path = "../anthic-trade-api-client" }
+anthic-model = { path = "../anthic-model" }

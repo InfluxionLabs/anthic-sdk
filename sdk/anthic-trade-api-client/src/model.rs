@@ -1,0 +1,89 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct NetworkStatusResponse {
+    pub cur_epoch: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct InfoResponse {
+    pub verify_parent_access_rule_sbor_hex: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct SolverFeeItem {
+    pub symbol: String,
+    pub amount: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct FeeInfoResponse {
+    pub solver_fee: Vec<SolverFeeItem>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct TokensResponse {
+    pub tokens: Vec<TokenDefinition>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Hash, Eq, PartialEq)]
+pub struct TokenPair {
+    /// Token symbol of the base resource
+    pub base: String,
+    /// Token symbol of the quote resource
+    pub quote: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct TokenPairsResponse {
+    pub token_pairs: Vec<TokenPair>,
+}
+
+#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
+pub struct AccountsResponse {
+    pub accounts: Vec<Account>,
+}
+
+#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Account {
+    pub address: String,
+    pub balances: Vec<ResourceBalance>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintInfo {
+    pub instamint_component: String,
+    pub customer_badge_resource: String,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintAccountsResponse {
+    pub accounts: Vec<InstamintAccount>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintAccount {
+    pub customer_badge_non_fungible_local_ids: Vec<String>,
+    pub address: String,
+    pub instamint_allowance: String,
+    pub unreconciled_loans: Vec<ResourceBalance>,
+    pub payback_addresses: Vec<InstamintPaybackAddress>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintPaybackAddress {
+    pub chain: String,
+    pub address: String,
+}
+
+#[derive(Debug, Default, Clone, Eq, PartialEq, Serialize, Deserialize)]
+pub struct ResourceBalance {
+    pub symbol: String,
+    pub balance: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
+pub struct TokenDefinition {
+    pub resource_address: String,
+    pub symbol: String,
+}
