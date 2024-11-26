@@ -405,7 +405,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "example-fill-subintent"
+name = "example-dex-subintent"
+version = "0.1.0"
+dependencies = [
+ "anthic-client",
+ "anthic-model",
+ "anthic-subintents",
+ "chrono",
+ "radix-common",
+ "radix-common-derive",
+ "radix-transactions",
+ "rand",
+ "tokio",
+]
+
+[[package]]
+name = "example-flash-liquidity-subintent"
 version = "0.1.0"
 dependencies = [
  "anthic-client",

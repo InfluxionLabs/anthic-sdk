@@ -8,17 +8,26 @@ pub struct NetworkStatusResponse {
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
 pub struct InfoResponse {
     pub verify_parent_access_rule_sbor_hex: String,
+    pub per_token_settlement_fee: Vec<SettlementFeeItem>,
+    pub per_level_anthic_fee: Vec<AnthicLevelFee>
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
-pub struct SolverFeeItem {
+pub struct SettlementFeeItem {
     pub symbol: String,
-    pub amount: String,
+    pub solver_amount: String,
+    pub transaction_execution_amount: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
-pub struct FeeInfoResponse {
-    pub solver_fee: Vec<SolverFeeItem>,
+pub struct AnthicLevelFee {
+    pub taker_fee: String,
+    pub maker_fee: String,
+}
+
+#[derive(Default, Clone, Eq, PartialEq, Serialize, Deserialize)]
+pub struct AccountAddressInfo {
+    pub level: u64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]

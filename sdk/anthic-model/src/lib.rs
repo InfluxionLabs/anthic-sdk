@@ -9,7 +9,15 @@ pub struct AnthicConfig {
     /// The mapping from Anthic token symbols to on-ledger resource addresses
     pub symbol_to_resource: HashMap<String, ResourceAddress>,
     /// Each subintent submitted requires a flat solver fee, a portion of which will be rebated.
-    pub solver_fee_per_resource: HashMap<String, Decimal>,
+    pub settlement_fee_per_resource: HashMap<String, Decimal>,
+    /// The taker fee in percentage for a given level
+    pub anthic_fee_per_level: Vec<AnthicLevelFee>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct AnthicLevelFee {
+    pub taker_fee: Decimal,
+    pub maker_fee: Decimal,
 }
 
 /// Instamint configuration
@@ -25,4 +33,9 @@ pub struct InstamintConfig {
 pub struct AnthicAccount {
     pub address: ComponentAddress,
     pub instamint_customer_badge_local_id: Option<NonFungibleLocalId>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct AnthicAddressInfo {
+    pub level: u64,
 }

@@ -50,13 +50,13 @@ impl AnthicSubintentManifestBuilder {
         account: ComponentAddress,
         sell: TokenAmount,
         buy: TokenAmount,
-        solver_fee_amount: Decimal,
+        settlement_fee_amount: Decimal,
         anthic_fee_amount: Decimal,
     ) -> Self {
         let sell_resource = self.config.symbol_to_resource.get(&sell.symbol).unwrap().clone();
         let buy_resource = self.config.symbol_to_resource.get(&buy.symbol).unwrap().clone();
         let fee_resource = sell_resource;
-        let withdraw_amount = sell.amount + solver_fee_amount + anthic_fee_amount;
+        let withdraw_amount = sell.amount + settlement_fee_amount + anthic_fee_amount;
 
         self.builder = self.builder
             // This instruction ensures that the subintent is processed by Anthic before being committed
@@ -72,9 +72,9 @@ impl AnthicSubintentManifestBuilder {
             .with_bucket("sell", |builder, bucket| builder.yield_to_parent((bucket,)))
             // The following instructions retrieve the fees
             .take_from_worktop(fee_resource, anthic_fee_amount, "anthic-fee")
-            .take_from_worktop(fee_resource, solver_fee_amount, "solver-fee")
+            .take_from_worktop(fee_resource, settlement_fee_amount, "settlement-fee")
             .with_name_lookup(|builder, lookup| {
-                builder.yield_to_parent((lookup.bucket("anthic-fee"), lookup.bucket("solver-fee")))
+                builder.yield_to_parent((lookup.bucket("anthic-fee"), lookup.bucket("settlement-fee")))
             })
             // Everything is settled, deposit all resources into the account and yield to parent
             .deposit_entire_worktop(account)

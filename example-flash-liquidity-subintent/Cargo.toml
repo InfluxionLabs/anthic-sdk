@@ -1,0 +1,18 @@
+[package]
+name = "example-flash-liquidity-subintent"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "example-flash-liquidity-subintent"
+
+[dependencies]
+radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-common-derive = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-transactions = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+tokio = { version = "1.32.0", features = ["full"]}
+rand = "0.8.5"
+chrono = { version = "0.4.26" }
+anthic-subintents = { path = "../sdk/anthic-subintents" }
+anthic-client = { path = "../sdk/anthic-client" }
+anthic-model = { path = "../sdk/anthic-model" }

@@ -3,7 +3,8 @@
 resolver = "2"
 
 members = [
-    "example-fill-subintent",
+    "example-dex-subintent",
+    "example-flash-liquidity-subintent",
     "sdk/anthic-client",
     "sdk/anthic-model",
     "sdk/anthic-subintents",

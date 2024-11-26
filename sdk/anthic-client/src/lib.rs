@@ -7,6 +7,7 @@ use anthic_trade_api_client::AnthicTradeApiClient;
 /// A high level wrapper around the anthic api
 pub struct AnthicClient {
     pub network: NetworkDefinition,
+    pub encoder: AddressBech32Encoder,
     pub decoder: AddressBech32Decoder,
     pub api_client: AnthicTradeApiClient,
 }
@@ -14,18 +15,31 @@ pub struct AnthicClient {
 impl AnthicClient {
     pub fn new(network: NetworkDefinition, url: String, api_key: String) -> Self {
         let decoder = AddressBech32Decoder::new(&network);
+        let encoder = AddressBech32Encoder::new(&network);
         Self {
             network,
             decoder,
+            encoder,
             api_client: AnthicTradeApiClient::new(url, api_key),
         }
     }
 
     /// Loads various static configurations from the Anthic API
     pub async fn load_anthic_config(&self) -> Result<AnthicConfig, reqwest::Error> {
-        let access_rule: AccessRule = {
+        let (verify_parent_access_rule, anthic_fee_per_level, settlement_fee_per_resource)= {
             let anthic_info = self.api_client.info().await?;
-            scrypto_decode(&hex::decode(anthic_info.verify_parent_access_rule_sbor_hex).unwrap()).unwrap()
+            let verify_parent_access_rule: AccessRule = scrypto_decode(&hex::decode(anthic_info.verify_parent_access_rule_sbor_hex).unwrap()).unwrap();
+            let anthic_taker_fee_per_level = anthic_info.per_level_anthic_fee.into_iter()
+                .map(|level| {
+                    AnthicLevelFee {
+                        taker_fee: Decimal::from_str(&level.taker_fee).unwrap(),
+                        maker_fee: Decimal::from_str(&level.maker_fee).unwrap(),
+                    }
+                }).collect();
+            let solver_fee_resources = anthic_info.per_token_settlement_fee.into_iter().map(|info| {
+                (info.symbol, Decimal::from_str(&info.transaction_execution_amount).unwrap() + Decimal::from_str(&info.solver_amount).unwrap())
+            }).collect();
+            (verify_parent_access_rule, anthic_taker_fee_per_level, solver_fee_resources)
         };
 
         let symbol_to_resource: HashMap<String, ResourceAddress> = {
@@ -36,17 +50,10 @@ impl AnthicClient {
             }).collect()
         };
 
-
-        let solver_fee_per_resource = {
-            let fee_info = self.api_client.fee_info().await?;
-            fee_info.solver_fee.into_iter().map(|info| {
-                (info.symbol, Decimal::from_str(&info.amount).unwrap())
-            }).collect()
-        };
-
         Ok(AnthicConfig {
-            verify_parent_access_rule: access_rule,
-            solver_fee_per_resource,
+            verify_parent_access_rule,
+            settlement_fee_per_resource,
+            anthic_fee_per_level,
             symbol_to_resource,
         })
     }
@@ -59,6 +66,13 @@ impl AnthicClient {
         Ok(InstamintConfig {
             customer_badge_resource,
             instamint_component
+        })
+    }
+
+    pub async fn load_account_address_info(&self, account_address: ComponentAddress) -> Result<AnthicAddressInfo, reqwest::Error> {
+        let address_info = self.api_client.account_address_info(self.encoder.encode(account_address.as_bytes()).unwrap()).await?;
+        Ok(AnthicAddressInfo {
+            level: address_info.level,
         })
     }
 

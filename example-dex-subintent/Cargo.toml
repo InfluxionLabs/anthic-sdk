@@ -1,10 +1,10 @@
 [package]
-name = "example-fill-subintent"
+name = "example-dex-subintent"
 version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "example-fill-subintent"
+name = "example-dex-subintent"
 
 [dependencies]
 radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }

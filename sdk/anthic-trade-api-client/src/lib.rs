@@ -29,8 +29,11 @@ impl AnthicTradeApiClient {
         res.json().await
     }
 
-    pub async fn fee_info(&self) -> Result<FeeInfoResponse, reqwest::Error> {
-        let url = format!("{}/trade/fee_info", &self.url);
+    pub async fn account_address_info(
+        &self,
+        address: String,
+    ) -> Result<AccountAddressInfo, reqwest::Error> {
+        let url = format!("{}/trade/account_addresses/{}", &self.url, address);
         let res = self.client.get(url).send().await?;
         res.json().await
     }

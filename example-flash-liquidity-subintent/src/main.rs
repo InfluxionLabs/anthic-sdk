@@ -22,7 +22,7 @@ struct NewUserOrder {
 async fn main() {
     let network = NetworkDefinition::from_str("stokenet").unwrap();
     let trade_api_url = "https://trade-api.staging.anthic.io";
-    let anthic_api_key = "<YOUR ANTHIC-API-KEY>";
+    let anthic_api_key = "dev-87b8ac19";
 
     // A high level Anthic client which wraps calls to the Anthic API
     let client = AnthicClient::new(
@@ -113,7 +113,7 @@ fn create_fill_manifest(
 
     // There is a flat solver fee which includes transaction execution fee, a portion of which will be rebated
     // in the transaction
-    let solver_fee_amount = anthic_config.solver_fee_per_resource.get(&sell.symbol).unwrap().clone();
+    let settlement_fee_amount = anthic_config.settlement_fee_per_resource.get(&sell.symbol).unwrap().clone();
     // Maker fees are zero initially
     let anthic_fee_amount = Decimal::zero();
 
@@ -121,7 +121,7 @@ fn create_fill_manifest(
         if let Some(local_id) = &account.instamint_customer_badge_local_id {
             let to_mint = TokenAmount {
                 symbol: sell.symbol.clone(),
-                amount: sell.amount + solver_fee_amount + anthic_fee_amount
+                amount: sell.amount + settlement_fee_amount + anthic_fee_amount
             };
             builder = builder.instamint_into_account(instamint_config, account.address, local_id.clone(), to_mint);
         } else {
@@ -129,7 +129,7 @@ fn create_fill_manifest(
         }
     }
 
-    let manifest = builder.add_anthic_limit_order(account.address, sell, buy, solver_fee_amount, anthic_fee_amount).build();
+    let manifest = builder.add_anthic_limit_order(account.address, sell, buy, settlement_fee_amount, anthic_fee_amount).build();
     Ok(manifest)
 }
 
