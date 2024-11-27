@@ -66,7 +66,7 @@ async fn main() {
     // Compose the subintent which includes the manifest just created as well as additional metadata info
     let subintent = {
         // The current epoch is required to create a valid subintent
-        let cur_epoch = client.api_client.network_status().await.unwrap().cur_epoch;
+        let cur_epoch = client.trade_api_client.network_status().await.unwrap().cur_epoch;
 
         // Anthic requires a minimum of 10 seconds expiry
         let expire_after_secs = 15;

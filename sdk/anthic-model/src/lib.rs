@@ -39,3 +39,9 @@ pub struct AnthicAccount {
 pub struct AnthicAddressInfo {
     pub level: u64,
 }
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct OnLedgerAccount {
+    pub address: ComponentAddress,
+    pub balances: HashMap<ResourceAddress, Decimal>,
+}

@@ -56,7 +56,7 @@ pub struct AccountsResponse {
 #[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Account {
     pub address: String,
-    pub balances: Vec<ResourceBalance>,
+    pub balances: Vec<TokenAmount>,
 }
 
 #[derive(Default, Clone, Serialize, Deserialize)]
@@ -75,7 +75,7 @@ pub struct InstamintAccount {
     pub customer_badge_non_fungible_local_ids: Vec<String>,
     pub address: String,
     pub instamint_allowance: String,
-    pub unreconciled_loans: Vec<ResourceBalance>,
+    pub unreconciled_loans: Vec<TokenAmount>,
     pub payback_addresses: Vec<InstamintPaybackAddress>,
 }
 
@@ -86,9 +86,9 @@ pub struct InstamintPaybackAddress {
 }
 
 #[derive(Debug, Default, Clone, Eq, PartialEq, Serialize, Deserialize)]
-pub struct ResourceBalance {
+pub struct TokenAmount {
     pub symbol: String,
-    pub balance: String,
+    pub amount: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]

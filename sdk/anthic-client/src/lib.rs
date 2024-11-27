@@ -9,7 +9,8 @@ pub struct AnthicClient {
     pub network: NetworkDefinition,
     pub encoder: AddressBech32Encoder,
     pub decoder: AddressBech32Decoder,
-    pub api_client: AnthicTradeApiClient,
+    /// Low level anthic api client
+    pub trade_api_client: AnthicTradeApiClient,
 }
 
 impl AnthicClient {
@@ -20,14 +21,14 @@ impl AnthicClient {
             network,
             decoder,
             encoder,
-            api_client: AnthicTradeApiClient::new(url, api_key),
+            trade_api_client: AnthicTradeApiClient::new(url, api_key),
         }
     }
 
     /// Loads various static configurations from the Anthic API
     pub async fn load_anthic_config(&self) -> Result<AnthicConfig, reqwest::Error> {
         let (verify_parent_access_rule, anthic_fee_per_level, settlement_fee_per_resource)= {
-            let anthic_info = self.api_client.info().await?;
+            let anthic_info = self.trade_api_client.info().await?;
             let verify_parent_access_rule: AccessRule = scrypto_decode(&hex::decode(anthic_info.verify_parent_access_rule_sbor_hex).unwrap()).unwrap();
             let anthic_taker_fee_per_level = anthic_info.per_level_anthic_fee.into_iter()
                 .map(|level| {
@@ -43,7 +44,7 @@ impl AnthicClient {
         };
 
         let symbol_to_resource: HashMap<String, ResourceAddress> = {
-            let tokens_response = self.api_client.tokens().await?;
+            let tokens_response = self.trade_api_client.tokens().await?;
             tokens_response.tokens.into_iter().map(|t| {
                 let address = ResourceAddress::try_from_bech32(&self.decoder, &t.resource_address).unwrap();
                 (t.symbol, address)
@@ -60,7 +61,7 @@ impl AnthicClient {
 
     /// Loads instamint configuration
     pub async fn load_instamint_config(&self) -> Result<InstamintConfig, reqwest::Error> {
-        let instamint_info = self.api_client.instamint_info().await?;
+        let instamint_info = self.trade_api_client.instamint_info().await?;
         let customer_badge_resource = ResourceAddress::try_from_bech32(&self.decoder, &instamint_info.customer_badge_resource).unwrap();
         let instamint_component = ComponentAddress::try_from_bech32(&self.decoder, &instamint_info.instamint_component).unwrap();
         Ok(InstamintConfig {
@@ -70,7 +71,7 @@ impl AnthicClient {
     }
 
     pub async fn load_account_address_info(&self, account_address: ComponentAddress) -> Result<AnthicAddressInfo, reqwest::Error> {
-        let address_info = self.api_client.account_address_info(self.encoder.encode(account_address.as_bytes()).unwrap()).await?;
+        let address_info = self.trade_api_client.account_address_info(self.encoder.encode(account_address.as_bytes()).unwrap()).await?;
         Ok(AnthicAddressInfo {
             level: address_info.level,
         })
@@ -79,7 +80,7 @@ impl AnthicClient {
     /// If authenticated, loads the associated Anthic account
     pub async fn load_anthic_account(&self) -> Result<AnthicAccount, reqwest::Error> {
         let instamint_account = {
-            let instamint_accounts = self.api_client.instamint_accounts().await?;
+            let instamint_accounts = self.trade_api_client.instamint_accounts().await?;
             instamint_accounts.accounts.into_iter().next().unwrap()
         };
 
