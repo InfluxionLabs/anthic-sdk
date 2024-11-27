@@ -2,8 +2,8 @@
 <module type="EMPTY_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/example-dex-subintent/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/example-flash-liquidity-subintent/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/dex-subintent/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/flash-liquidity-subintent/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sdk/anthic-client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sdk/anthic-model/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sdk/anthic-subintents/src" isTestSource="false" />

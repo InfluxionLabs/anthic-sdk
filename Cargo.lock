@@ -73,7 +73,7 @@ dependencies = [
  "radix-common-derive",
  "radix-engine-interface",
  "radix-transactions",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
 ]
 
 [[package]]
@@ -86,7 +86,7 @@ dependencies = [
  "radix-common-derive",
  "radix-engine-interface",
  "radix-transactions",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60)",
 ]
 
 [[package]]
@@ -328,6 +328,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "dex-subintent"
+version = "0.1.0"
+dependencies = [
+ "anthic-client",
+ "anthic-model",
+ "anthic-subintents",
+ "chrono",
+ "radix-common",
+ "radix-common-derive",
+ "radix-transactions",
+ "rand",
+ "tokio",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -405,36 +420,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "example-dex-subintent"
-version = "0.1.0"
-dependencies = [
- "anthic-client",
- "anthic-model",
- "anthic-subintents",
- "chrono",
- "radix-common",
- "radix-common-derive",
- "radix-transactions",
- "rand",
- "tokio",
-]
-
-[[package]]
-name = "example-flash-liquidity-subintent"
-version = "0.1.0"
-dependencies = [
- "anthic-client",
- "anthic-model",
- "anthic-subintents",
- "chrono",
- "radix-common",
- "radix-common-derive",
- "radix-transactions",
- "rand",
- "tokio",
-]
-
-[[package]]
 name = "fastrand"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -445,6 +430,21 @@ name = "fiat-crypto"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28dea519a9695b9977216879a3ebfddf92f1c08c05d984f8996aecd6ecdc811d"
+
+[[package]]
+name = "flash-liquidity-subintent"
+version = "0.1.0"
+dependencies = [
+ "anthic-client",
+ "anthic-model",
+ "anthic-subintents",
+ "chrono",
+ "radix-common",
+ "radix-common-derive",
+ "radix-transactions",
+ "rand",
+ "tokio",
+]
 
 [[package]]
 name = "fnv"
@@ -1194,18 +1194,18 @@ dependencies = [
 [[package]]
 name = "radix-blueprint-schema-init"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "bitflags 1.3.2",
  "radix-common",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "serde",
 ]
 
 [[package]]
 name = "radix-common"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "bech32",
  "blake2",
@@ -1218,9 +1218,9 @@ dependencies = [
  "num-integer",
  "num-traits",
  "paste",
- "radix-rust",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "radix-sbor-derive",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "secp256k1",
  "sha3",
  "strum",
@@ -1230,7 +1230,7 @@ dependencies = [
 [[package]]
 name = "radix-common-derive"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "paste",
  "proc-macro2",
@@ -1242,7 +1242,7 @@ dependencies = [
 [[package]]
 name = "radix-engine-interface"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "bitflags 1.3.2",
  "const-sha1",
@@ -1252,9 +1252,9 @@ dependencies = [
  "radix-blueprint-schema-init",
  "radix-common",
  "radix-common-derive",
- "radix-rust",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "regex",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "serde",
  "serde_json",
  "strum",
@@ -1269,32 +1269,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "radix-rust"
+version = "1.3.0-dev"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
+dependencies = [
+ "indexmap",
+]
+
+[[package]]
 name = "radix-sbor-derive"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "proc-macro2",
  "quote",
- "sbor-derive-common",
+ "sbor-derive-common 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "syn 1.0.109",
 ]
 
 [[package]]
 name = "radix-substate-store-interface"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "hex",
  "itertools",
  "radix-common",
- "radix-rust",
- "sbor",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
 ]
 
 [[package]]
 name = "radix-transactions"
 version = "1.3.0-dev"
-source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "annotate-snippets",
  "bech32",
@@ -1303,9 +1311,9 @@ dependencies = [
  "paste",
  "radix-common",
  "radix-engine-interface",
- "radix-rust",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "radix-substate-store-interface",
- "sbor",
+ "sbor 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "strum",
 ]
 
@@ -1519,8 +1527,22 @@ dependencies = [
  "hex",
  "lazy_static",
  "paste",
- "radix-rust",
- "sbor-derive",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60)",
+ "sbor-derive 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60)",
+ "serde",
+]
+
+[[package]]
+name = "sbor"
+version = "1.3.0-dev"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
+dependencies = [
+ "const-sha1",
+ "hex",
+ "lazy_static",
+ "paste",
+ "radix-rust 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
+ "sbor-derive 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "serde",
 ]
 
@@ -1530,7 +1552,17 @@ version = "1.3.0-dev"
 source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
 dependencies = [
  "proc-macro2",
- "sbor-derive-common",
+ "sbor-derive-common 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60)",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "sbor-derive"
+version = "1.3.0-dev"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
+dependencies = [
+ "proc-macro2",
+ "sbor-derive-common 1.3.0-dev (git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337)",
  "syn 1.0.109",
 ]
 
@@ -1538,6 +1570,19 @@ dependencies = [
 name = "sbor-derive-common"
 version = "1.3.0-dev"
 source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-86080d60#86080d60ac637999549180f946ce84d2fa4390b7"
+dependencies = [
+ "const-sha1",
+ "indexmap",
+ "itertools",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "sbor-derive-common"
+version = "1.3.0-dev"
+source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=cuttlefish-c3aa4337#c3aa4337b7631b5fb90acef44fa8ffd62bdea821"
 dependencies = [
  "const-sha1",
  "indexmap",

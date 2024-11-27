@@ -1,0 +1,18 @@
+[package]
+name = "flash-liquidity-subintent"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "flash-liquidity-subintent"
+
+[dependencies]
+radix-common = { workspace = true }
+radix-common-derive = { workspace = true }
+radix-transactions = { workspace = true }
+tokio = { version = "1.32.0", features = ["full"]}
+rand = "0.8.5"
+chrono = { version = "0.4.26" }
+anthic-subintents = { path = "../../sdk/anthic-subintents" }
+anthic-client = { path = "../../sdk/anthic-client" }
+anthic-model = { path = "../../sdk/anthic-model" }

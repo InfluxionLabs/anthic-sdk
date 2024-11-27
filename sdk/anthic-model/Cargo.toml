@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
-radix-common-derive = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
-radix-transactions = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
-radix-engine-interface = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
-sbor = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-86080d60" }
+radix-common = { workspace = true }
+radix-common-derive = { workspace = true }
+radix-transactions = { workspace = true }
+radix-engine-interface = { workspace = true }
+sbor = { workspace = true }
