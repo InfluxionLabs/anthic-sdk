@@ -1,3 +1,5 @@
+pub mod validate;
+
 use radix_common::prelude::*;
 use radix_transactions::prelude::*;
 use anthic_model::{AnthicConfig, InstamintConfig};
