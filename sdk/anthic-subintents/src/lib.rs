@@ -23,6 +23,11 @@ impl AnthicSubintentManifestBuilder {
         }
     }
 
+    pub fn builder(mut self, update: impl FnOnce(SubintentManifestV2Builder) -> SubintentManifestV2Builder) -> Self {
+        self.builder = update(self.builder);
+        self
+    }
+
     /// Add instructions to instamint a token into an instamint account
     pub fn instamint_into_account(
         mut self,
@@ -75,6 +80,12 @@ impl AnthicSubintentManifestBuilder {
             // The following instructions retrieve the fees
             .take_from_worktop(fee_resource, anthic_fee_amount, "anthic-fee")
             .take_from_worktop(fee_resource, settlement_fee_amount, "settlement-fee")
+            .assert_next_call_returns_only(
+                ManifestResourceConstraints::new().with(
+                    fee_resource,
+                    ManifestResourceConstraint::AtLeastAmount(Decimal::zero())
+                )
+            )
             .with_name_lookup(|builder, lookup| {
                 builder.yield_to_parent((lookup.bucket("anthic-fee"), lookup.bucket("settlement-fee")))
             })
