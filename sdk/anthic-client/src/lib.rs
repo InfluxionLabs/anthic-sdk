@@ -59,7 +59,7 @@ impl AnthicClient {
         })
     }
 
-    /// Loads instamint configuration
+    /// Loads instamint-loan-repayment configuration
     pub async fn load_instamint_config(&self) -> Result<InstamintConfig, reqwest::Error> {
         let instamint_info = self.trade_api_client.instamint_info().await?;
         let customer_badge_resource = ResourceAddress::try_from_bech32(&self.decoder, &instamint_info.customer_badge_resource).unwrap();
@@ -92,5 +92,52 @@ impl AnthicClient {
             address: account,
             instamint_customer_badge_local_id: Some(customer_badge_local_id),
         })
+    }
+
+    pub async fn load_instamint_payback_addresses(&self) -> Result<InstamintRepaymentInfo, reqwest::Error> {
+        let instamint_account = {
+            let instamint_accounts = self.trade_api_client.instamint_accounts().await?;
+            instamint_accounts.accounts.into_iter().next().unwrap()
+        };
+
+        let tokens = self.trade_api_client.instamint_tokens().await?;
+        let info: HashMap<String, Vec<InstamintTokenPaybackAddress>> = tokens.tokens.into_iter()
+            .filter(|token| token.chain.eq("Radix"))
+            .map(|token| {
+                let repayment_addresses: Vec<_> = token.repayment_tokens.iter().flat_map(|repayment_token| {
+                    instamint_account.payback_addresses.iter()
+                        .filter_map(|payback_address| {
+                            if payback_address.chain.eq(&repayment_token.chain) {
+                                Some(InstamintTokenPaybackAddress {
+                                    chain: repayment_token.chain.clone(),
+                                    symbol: repayment_token.symbol.clone(),
+                                    token_identifier: repayment_token.clone().address.map(TokenIdentifierOnChain::Address).unwrap_or(TokenIdentifierOnChain::Native),
+                                    address: payback_address.address.clone(),
+                                })
+                            } else {
+                                None
+                            }
+                        })
+                }).collect();
+
+            (token.symbol, repayment_addresses)
+        }).collect();
+
+        Ok(InstamintRepaymentInfo {
+            info
+        })
+    }
+
+    pub async fn get_instamint_outstanding_loans(&self) -> Result<HashMap<String, Decimal>, reqwest::Error> {
+        let instamint_account = {
+            let instamint_accounts = self.trade_api_client.instamint_accounts().await?;
+            instamint_accounts.accounts.into_iter().next().unwrap()
+        };
+
+        let outstanding_loans = instamint_account.unreconciled_loans.into_iter().map(|loan| {
+            (loan.symbol, Decimal::from_str(&loan.amount).unwrap())
+        }).collect();
+
+        Ok(outstanding_loans)
     }
 }

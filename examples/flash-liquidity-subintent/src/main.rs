@@ -22,7 +22,7 @@ struct NewUserOrder {
 async fn main() {
     let network = NetworkDefinition::from_str("stokenet").unwrap();
     let trade_api_url = "https://trade-api.staging.anthic.io";
-    let anthic_api_key = "dev-87b8ac19";
+    let anthic_api_key = "<YOUR ANTHIC-API-KEY>";
 
     // A high level Anthic client which wraps calls to the Anthic API
     let client = AnthicClient::new(
@@ -60,7 +60,7 @@ async fn main() {
         }
     };
 
-    // Create the manifest for the fill, in this case we will use instamint to mint the required Test-xwBTC
+    // Create the manifest for the fill, in this case we will use instamint-loan-repayment to mint the required Test-xwBTC
     let manifest = create_fill_manifest(&anthic_config, &instamint_config, &anthic_account, user_order_to_fill, true).unwrap();
 
     // Compose the subintent which includes the manifest just created as well as additional metadata info
@@ -125,7 +125,7 @@ fn create_fill_manifest(
             };
             builder = builder.instamint_into_account(instamint_config, account.address, local_id.clone(), to_mint);
         } else {
-            return Err("Cannot instamint without badge".to_string());
+            return Err("Cannot instamint-loan-repayment without badge".to_string());
         }
     }
 
