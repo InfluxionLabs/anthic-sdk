@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/sdk/anthic-subintents/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sdk/anthic-trade-api-client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/sdk/flash-liquidity-api-model/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/instamint-loan-repayment/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/sdk/anthic-subintents/target" />
     </content>

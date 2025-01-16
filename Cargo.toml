@@ -5,6 +5,7 @@ resolver = "2"
 members = [
     "examples/dex-subintent",
     "examples/flash-liquidity-subintent",
+    "examples/instamint-loan-repayment",
     "sdk/anthic-client",
     "sdk/anthic-model",
     "sdk/anthic-subintents",
@@ -12,7 +13,6 @@ members = [
 ]
 
 [workspace.dependencies]
-
 radix-common = { git = "https://github.com/radixdlt/radixdlt-scrypto",  tag = "cuttlefish-c3aa4337" }
 radix-common-derive = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-c3aa4337" }
 radix-transactions = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "cuttlefish-c3aa4337" }

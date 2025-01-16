@@ -34,12 +34,12 @@ impl AnthicSubintentManifestBuilder {
         let resource = self.config.symbol_to_resource.get(&to_mint.symbol).unwrap().clone();
 
         self.builder = self.builder.create_proof_from_account_of_non_fungibles(account, instamint_config.customer_badge_resource, [local_id.clone()])
-            .create_proof_from_auth_zone_of_non_fungibles(instamint_config.customer_badge_resource, [local_id], "instamint-proof")
+            .create_proof_from_auth_zone_of_non_fungibles(instamint_config.customer_badge_resource, [local_id], "instamint-loan-repayment-proof")
             .with_name_lookup(|builder, lookup| {
                 builder.call_method(
                     instamint_config.instamint_component,
                     "mint_to_account",
-                    (resource, to_mint.amount, lookup.proof("instamint-proof"),),
+                    (resource, to_mint.amount, lookup.proof("instamint-loan-repayment-proof"),),
                 )
             });
 

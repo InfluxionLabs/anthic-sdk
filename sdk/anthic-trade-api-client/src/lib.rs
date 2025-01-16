@@ -61,22 +61,32 @@ impl AnthicTradeApiClient {
         res.json().await
     }
 
+    pub async fn instamint_info(&self) -> Result<InstamintInfo, reqwest::Error> {
+        let url = format!("{}/instamint/info", &self.url);
+        let res = self
+            .client
+            .get(url)
+            .send()
+            .await?;
+        res.json().await
+    }
+
+    pub async fn instamint_tokens(&self) -> Result<InstamintTokensResponse, reqwest::Error> {
+        let url = format!("{}/instamint/tokens", &self.url);
+        let res = self
+            .client
+            .get(url)
+            .send()
+            .await?;
+        res.json().await
+    }
+
     pub async fn instamint_accounts(&self) -> Result<InstamintAccountsResponse, reqwest::Error> {
         let url = format!("{}/instamint/accounts", &self.url);
         let res = self
             .client
             .get(url)
             .header("ANTHIC-API-KEY", self.api_key.as_str())
-            .send()
-            .await?;
-        res.json().await
-    }
-
-    pub async fn instamint_info(&self) -> Result<InstamintInfo, reqwest::Error> {
-        let url = format!("{}/instamint/info", &self.url);
-        let res = self
-            .client
-            .get(url)
             .send()
             .await?;
         res.json().await

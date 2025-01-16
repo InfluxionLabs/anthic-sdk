@@ -66,6 +66,30 @@ pub struct InstamintInfo {
 }
 
 #[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintTokensResponse {
+    pub tokens: Vec<InstamintTokenWithRepaymentInfo>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize, PartialEq)]
+pub struct InstamintTokenWithRepaymentInfo {
+    pub symbol: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub address: Option<String>,
+    pub chain: String,
+    pub repayment_tokens: Vec<InstamintToken>,
+}
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct InstamintToken {
+    pub symbol: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub address: Option<String>,
+    pub chain: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub testnet: Option<String>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
 pub struct InstamintAccountsResponse {
     pub accounts: Vec<InstamintAccount>,
 }

@@ -25,7 +25,7 @@ pub struct AnthicLevelFee {
 pub struct InstamintConfig {
     /// The resource address which is used for customer badges
     pub customer_badge_resource: ResourceAddress,
-    /// The address of the instamint component which is called to instamint resources
+    /// The address of the instamint-loan-repayment component which is called to instamint-loan-repayment resources
     pub instamint_component: ComponentAddress,
 }
 
@@ -44,4 +44,30 @@ pub struct AnthicAddressInfo {
 pub struct OnLedgerAccount {
     pub address: ComponentAddress,
     pub balances: HashMap<ResourceAddress, Decimal>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum TokenIdentifierOnChain {
+    Native,
+    Address(String),
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct InstamintTokenPaybackAddress {
+    pub chain: String,
+    pub symbol: String,
+    pub token_identifier: TokenIdentifierOnChain,
+    pub address: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct InstamintRepaymentInfo {
+    pub info: HashMap<String, Vec<InstamintTokenPaybackAddress>>,
+}
+
+impl InstamintRepaymentInfo {
+    pub fn get_repayment_address(&self, symbol: &str, chain: &str) -> Option<InstamintTokenPaybackAddress> {
+        let payback_addresses = self.info.get(symbol)?;
+        payback_addresses.iter().find(|a| a.chain.eq(chain)).cloned()
+    }
 }
