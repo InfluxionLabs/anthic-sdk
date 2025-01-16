@@ -63,6 +63,9 @@ fn create_order_manifest(
     let anthic_fee_percent = anthic_config.anthic_fee_per_level.get(address_info.level as usize).unwrap().taker_fee.clone();
     let anthic_fee_amount = sell.amount * anthic_fee_percent;
 
-    let manifest = builder.add_anthic_limit_order(account_address, sell, buy, solver_fee_amount, anthic_fee_amount).build();
+    let manifest = builder
+        // Add assert_worktop_is_empty at the beginning of the manifest to get rid of Deposit unknown resources warning in wallet
+        .builder(|builder| builder.assert_worktop_is_empty())
+        .add_anthic_limit_order(account_address, sell, buy, solver_fee_amount, anthic_fee_amount).build();
     Ok(manifest)
 }

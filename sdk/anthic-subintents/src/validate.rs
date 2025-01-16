@@ -271,6 +271,7 @@ impl SubintentValidator {
                                 },
                                 anthic_fee_bucket: anthic_fee_bucket.clone(),
                                 solver_fee_bucket: ManifestBucket(cur_bucket),
+                                asserted_next_call: false,
                             };
                         return Ok(());
                     }
@@ -286,18 +287,34 @@ impl SubintentValidator {
                 order,
                 anthic_fee_bucket,
                 solver_fee_bucket,
+                asserted_next_call,
             } => {
-                if let InstructionV2::YieldToParent(YieldToParent { args }) = &instruction {
-                    if let Some((b0, b1)) = try_manifest_args_to_two_buckets(args) {
-                        if b0.eq(anthic_fee_bucket) && b1.eq(solver_fee_bucket) {
-                            state.qualified_state =
-                                SubintentValidatorQualifiedState::YieldedFeesToParent {
-                                    order: order.clone(),
-                                };
+                match &instruction {
+                    InstructionV2::YieldToParent(YieldToParent { args }) => {
+                        if let Some((b0, b1)) = try_manifest_args_to_two_buckets(args) {
+                            if b0.eq(anthic_fee_bucket) && b1.eq(solver_fee_bucket) {
+                                state.qualified_state =
+                                    SubintentValidatorQualifiedState::YieldedFeesToParent {
+                                        order: order.clone(),
+                                    };
+                                return Ok(());
+                            }
+                        }
+                    }
+                    InstructionV2::AssertNextCallReturnsOnly(..) => {
+                        if !*asserted_next_call {
+                            state.qualified_state = SubintentValidatorQualifiedState::CreatedSettlementFeeBucket {
+                                order: order.clone(),
+                                anthic_fee_bucket: anthic_fee_bucket.clone(),
+                                solver_fee_bucket: solver_fee_bucket.clone(),
+                                asserted_next_call: true,
+                            };
                             return Ok(());
                         }
                     }
+                    _ => {}
                 }
+
                 Err(format!(
                     "Expected Yield to parent but was: {:?}",
                     instruction
@@ -397,6 +414,7 @@ enum SubintentValidatorQualifiedState {
         order: AnthicLimitOrderDefinition,
         anthic_fee_bucket: ManifestBucket,
         solver_fee_bucket: ManifestBucket,
+        asserted_next_call: bool,
     },
     YieldedFeesToParent {
         order: AnthicLimitOrderDefinition,
