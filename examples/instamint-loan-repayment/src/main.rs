@@ -22,7 +22,7 @@ async fn main() {
     let repayment_info = client.load_instamint_payback_addresses().await.map_err(|e| println!("{:#?}", e)).unwrap();
 
     // Get all outstanding instamint loans
-    let outstanding_loans = client.get_instamint_outstanding_loans().await.unwrap();
+    let outstanding_loans = client.get_instamint_balance().await.unwrap();
 
     // Get the outstanding loan for xUSDT specifically
     let outstanding_xusdt_loan = outstanding_loans.get(symbol).cloned().unwrap_or_default();

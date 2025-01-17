@@ -90,18 +90,32 @@ pub struct InstamintToken {
 }
 
 #[derive(Default, Clone, Serialize, Deserialize)]
-pub struct InstamintAccountsResponse {
-    pub accounts: Vec<InstamintAccount>,
+pub struct InstamintAccountResponse {
+    pub account: InstamintAccount,
 }
 
 #[derive(Default, Clone, Serialize, Deserialize)]
 pub struct InstamintAccount {
     pub customer_badge_non_fungible_local_ids: Vec<String>,
     pub address: String,
-    pub instamint_allowance: String,
-    pub unreconciled_loans: Vec<TokenAmount>,
     pub payback_addresses: Vec<InstamintPaybackAddress>,
 }
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintAllowance {
+    pub allowance: String,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintBalance {
+    pub balances: Vec<TokenAmount>,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct InstamintPaybackAddresses {
+    pub payback_addresses: Vec<InstamintPaybackAddress>,
+}
+
 
 #[derive(Default, Clone, Serialize, Deserialize)]
 pub struct InstamintPaybackAddress {

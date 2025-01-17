@@ -1,5 +1,6 @@
 pub mod model;
 
+use serde::de::DeserializeOwned;
 use crate::model::*;
 
 pub struct AnthicTradeApiClient {
@@ -81,8 +82,23 @@ impl AnthicTradeApiClient {
         res.json().await
     }
 
-    pub async fn instamint_accounts(&self) -> Result<InstamintAccountsResponse, reqwest::Error> {
-        let url = format!("{}/instamint/accounts", &self.url);
+    pub async fn instamint_account(&self) -> Result<InstamintAccountResponse, reqwest::Error> {
+        self.get(format!("{}/instamint/account", &self.url)).await
+    }
+
+    pub async fn instamint_allowance(&self) -> Result<InstamintAllowance, reqwest::Error> {
+        self.get(format!("{}/instamint/account/allowance", &self.url)).await
+    }
+
+    pub async fn instamint_balance(&self) -> Result<InstamintBalance, reqwest::Error> {
+        self.get(format!("{}/instamint/account/balance", &self.url)).await
+    }
+
+    pub async fn instamint_payback_addresses(&self) -> Result<InstamintPaybackAddresses, reqwest::Error> {
+        self.get(format!("{}/instamint/account/payback-addresses", &self.url)).await
+    }
+
+    pub async fn get<T: DeserializeOwned>(&self, url: String) -> Result<T, reqwest::Error> {
         let res = self
             .client
             .get(url)
