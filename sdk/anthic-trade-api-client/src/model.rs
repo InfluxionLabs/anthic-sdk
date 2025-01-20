@@ -98,7 +98,6 @@ pub struct InstamintAccountResponse {
 pub struct InstamintAccount {
     pub customer_badge_non_fungible_local_ids: Vec<String>,
     pub address: String,
-    pub payback_addresses: Vec<InstamintPaybackAddress>,
 }
 
 #[derive(Default, Clone, Serialize, Deserialize)]
